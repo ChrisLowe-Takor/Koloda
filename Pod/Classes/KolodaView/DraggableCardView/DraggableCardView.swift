@@ -94,6 +94,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         doubleTapGestureRecognizer.cancelsTouchesInView = false
         addGestureRecognizer(doubleTapGestureRecognizer)
+        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
     }
     
     //MARK: Configurations
