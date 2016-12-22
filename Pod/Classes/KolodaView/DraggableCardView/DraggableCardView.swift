@@ -16,6 +16,7 @@ protocol DraggableCardDelegate: class {
     func card(_ card: DraggableCardView, shouldSwipeIn direction: SwipeResultDirection) -> Bool
     func card(cardWasReset card: DraggableCardView)
     func card(cardWasTapped card: DraggableCardView)
+    func card(cardWasDoubleTapped card: DraggableCardView)
     func card(cardSwipeThresholdRatioMargin card: DraggableCardView) -> CGFloat?
     func card(cardAllowedDirections card: DraggableCardView) -> [SwipeResultDirection]
     func card(cardShouldDrag card: DraggableCardView) -> Bool
@@ -44,6 +45,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
     
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var tapGestureRecognizer: UITapGestureRecognizer!
+    private var doubleTapGestureRecognizer: UITapGestureRecognizer!
     private var animationDirectionY: CGFloat = 1.0
     private var dragBegin = false
     private var dragDistance = CGPoint.zero
@@ -85,8 +87,13 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         addGestureRecognizer(panGestureRecognizer)
         panGestureRecognizer.delegate = self
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DraggableCardView.tapRecognized(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.cancelsTouchesInView = false
         addGestureRecognizer(tapGestureRecognizer)
+        doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DraggableCardView.doubleTapRecognized(_:)))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        doubleTapGestureRecognizer.cancelsTouchesInView = false
+        addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
     //MARK: Configurations
@@ -248,6 +255,10 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
     
     func tapRecognized(_ recogznier: UITapGestureRecognizer) {
         delegate?.card(cardWasTapped: self)
+    }
+
+    func doubleTapRecognized(_ recognizer: UITapGestureRecognizer) {
+        delegate?.card(cardWasDoubleTapped: self)
     }
     
     //MARK: Private

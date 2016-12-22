@@ -44,6 +44,7 @@ public protocol KolodaViewDelegate: class {
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection)
     func kolodaDidRunOutOfCards(_ koloda: KolodaView)
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int)
+    func kolada(_ kolada: KolodaView, didDoubleTapCardAt index: Int)
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool
     func kolodaShouldMoveBackgroundCard(_ koloda: KolodaView) -> Bool
     func kolodaShouldTransparentizeNextCard(_ koloda: KolodaView) -> Bool
@@ -299,6 +300,13 @@ open class KolodaView: UIView, DraggableCardDelegate {
         
         let index = currentCardIndex + visibleIndex
         delegate?.koloda(self, didSelectCardAt: index)
+    }
+
+    func card(cardWasDoubleTapped card: DraggableCardView) {
+        guard let visibleIndex = visibleCards.index(of: card) else { return }
+
+        let index = currentCardIndex + visibleIndex
+        delegate?.kolada(self, didDoubleTapCardAt: index)
     }
     
     func card(cardSwipeThresholdRatioMargin card: DraggableCardView) -> CGFloat? {
