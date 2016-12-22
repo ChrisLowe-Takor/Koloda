@@ -64,6 +64,7 @@ public extension KolodaViewDelegate {
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {}
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {}
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {}
+    func kolada(_ kolada: KolodaView, didDoubleTapCardAt index: Int) {}
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool { return true }
     func kolodaShouldMoveBackgroundCard(_ koloda: KolodaView) -> Bool { return true }
     func kolodaShouldTransparentizeNextCard(_ koloda: KolodaView) -> Bool { return true }
